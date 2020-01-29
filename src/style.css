@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Merriweather', serif;
+}
+
+.main {
+    width: 80vw;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.winning {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 20vh;
+    background: #0f0;
+}
+
+/* .winning .letterCard {
+    align-self: center;
+} */
+
+.winning .letterCard .letter {
+    animation: winner 400ms ease-in-out;
+    font-size: 40pt;
+}
+
+.wrong {
+    position: relative;
+    animation: shake 100ms ease;
+}
+
+.letterCard {
+    display: inline-flex;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.pool {
+    display: flex;
+    justify-content: center;
+}
+
+.pool .letterCard:hover,
+.pool .letterCard:focus {
+    outline: none;
+    cursor: pointer;
+    background: #c7c6c6;
+}
+
+.pool .letterCard:hover span,
+.pool .letterCard:focus span {
+    text-decoration: underline;
+}
+
+.pool .highlight {}
+
+.pool .obscure {
+    opacity: 0.5;
+}
+
+.letter {
+    align-self: center;
+    font-size: 30pt;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 0 auto;
+    pointer-events: none;
+}
+
+/* ANIMERINGAR */
+
+@keyframes winner {
+    0% {
+        font-size: 0pt;
+    }
+
+    50% {
+        font-size: 60pt;
+    }
+
+    100% {
+        font-size: 40pt;
+    }
+}
+
+@keyframes shake {
+    0% {
+        left: 5px;
+    }
+
+    25% {
+        left: -5px;
+    }
+
+    50% {
+        left: 10px;
+    }
+
+    75% {
+        left: -10px;
+    }
+
+
+    100% {
+        left: -5px;
+    }
+}
