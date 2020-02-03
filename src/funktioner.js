@@ -33,12 +33,13 @@ function createLetterCard(letter = "a") {
 }
 
 function mainLoop(e) {
-    if (e.key === "Enter" || e.type === "click") {
+    if (keyCheck(e)) {
         const pool = document.querySelector(".pool")
 
         if (checkLetters(this.textContent)) {
             document.querySelector(".winning").append(this)
             this.removeEventListener("click", mainLoop)
+            this.setAttribute("tabindex", "-1")
             addSuggestions()
             pool.dataset.tries = 0
         } else {
@@ -54,6 +55,10 @@ function mainLoop(e) {
             }
         }
     }
+}
+
+function keyCheck(e) {
+    return e.key === "Enter" || e.type === "click" ? true : false
 }
 
 // *** TESTSAK ***
@@ -113,7 +118,7 @@ function addSuggestions() {
             createLetterCard(suggestion)
         }
     } else {
-        console.log("Grattis!")
+        document.querySelector(".end").style.display = "block"
     }
 }
 
@@ -150,5 +155,11 @@ function checkLetters(letterToCheck) {
         return alphabetMain.indexOf(previousLetter) === alphabetMain.indexOf(letterToCheck) - 1
     } else {
         return true
+    }
+}
+
+function refresh(e) {
+    if (keyCheck(e)) {
+        location.reload()
     }
 }

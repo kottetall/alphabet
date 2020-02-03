@@ -14,4 +14,13 @@ document.body.onload = () => {
             sak.click()
         }
     })
+
+    document.querySelector(".reload").addEventListener("click", refresh)
+    document.querySelector(".reload").addEventListener("keydown", refresh)
+
+    // TEST
+    document.querySelector(".buttons").addEventListener("click", () => {
+        console.log("testevent funkar")
+        document.querySelector(".end").style.display = "block"
+    })
 }

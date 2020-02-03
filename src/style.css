@@ -5,30 +5,70 @@
     font-family: 'Merriweather', serif;
 }
 
+:root {
+    /* VARS */
+    --footer-height: 15vh;
+    --main-bg: #b4e0f0;
+    --top-bg: #5591f8;
+}
+
 .main {
-    width: 80vw;
+    min-height: 100vh;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    background: var(--main-bg);
+}
+
+.end {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 70%;
+    background: plum;
+    padding: 30px 0;
+    text-align: center;
+    z-index: 100;
+    animation: fadeIn 1000ms ease;
+}
+
+.endtext {
+    position: relative;
+    display: block;
+    top: 50%;
+    transform: translateY(-50%);
+    text-transform: uppercase;
+    font-weight: bolder;
+    font-size: 16pt;
+    letter-spacing: 5px;
 }
 
 .winning {
     display: flex;
+    padding-top: 5vh;
+    padding-bottom: 100px;
     align-content: center;
     justify-content: center;
     flex-wrap: wrap;
     min-height: 20vh;
-    background: #0f0;
+    background: var(--top-bg);
+    background: linear-gradient(0, var(--main-bg) 4%, var(--top-bg));
 }
 
-/* .winning .letterCard {
-    align-self: center;
-} */
-
 .winning .letterCard .letter {
+    font-size: 20pt;
+    opacity: 0.5;
+}
+
+.winning .letterCard:last-child .letter {
     animation: winner 400ms ease-in-out;
     font-size: 40pt;
+    opacity: 1;
+}
+
+.winning .letterCard:not(:last-child) .letter {
+    transition: opacity 300ms ease-in-out, font-size 300ms ease-in-out;
 }
 
 .wrong {
@@ -37,15 +77,25 @@
 }
 
 .letterCard {
+    --cardSize: 70px;
     display: inline-flex;
-    height: 100px;
-    width: 100px;
+    height: var(--cardSize);
+    width: var(--cardSize);
     border-radius: 50%;
 }
 
 .pool {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    margin-top: 5vh;
+    padding: 0 20px;
+    margin-bottom: var(--footer-height);
+}
+
+.pool .letterCard {
+    box-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+    background: #fff4f4f5;
+    animation: fadeIn 1000ms ease;
 }
 
 .pool .letterCard:hover,
@@ -54,13 +104,6 @@
     cursor: pointer;
     background: #c7c6c6;
 }
-
-.pool .letterCard:hover span,
-.pool .letterCard:focus span {
-    text-decoration: underline;
-}
-
-.pool .highlight {}
 
 .pool .obscure {
     opacity: 0.5;
@@ -73,6 +116,30 @@
     font-weight: bold;
     margin: 0 auto;
     pointer-events: none;
+}
+
+.buttons {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: var(--footer-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reload {
+    height: 50px;
+    width: 100px;
+    border: none;
+    border-radius: 20px;
+    background: #6565ea;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.reload:hover {
+    cursor: pointer;
 }
 
 /* ANIMERINGAR */
@@ -111,5 +178,15 @@
 
     100% {
         left: -5px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }
