@@ -7,13 +7,18 @@
 
 :root {
     /* VARS */
-    --footer-height: 15vh;
+    --footer-height: 20vh;
     --main-bg: #b4e0f0;
     --top-bg: #5591f8;
 }
 
+body {
+    background: linear-gradient(var(--top-bg) 15vh, var(--main-bg));
+}
+
 .main {
     min-height: 100vh;
+    max-width: 630px;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -112,7 +117,7 @@
 .letter {
     align-self: center;
     font-size: 30pt;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-weight: bold;
     margin: 0 auto;
     pointer-events: none;
@@ -124,11 +129,17 @@
     width: 100%;
     height: var(--footer-height);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.langSelector {
+    /* display: inline-block; */
+}
+
 .reload {
+    margin-top: 20px;
     height: 50px;
     width: 100px;
     border: none;

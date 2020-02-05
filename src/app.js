@@ -2,18 +2,15 @@
 
 console.log("app.js funkar")
 
-const alphabetMain = createAlphabet()
-const possibleAnswers = createAlphabet()
+
+let alphabetMain = createAlphabet()
+let possibleAnswers = createAlphabet()
 
 document.body.onload = () => {
-    addSuggestions()
 
-    // TODO: Snygga till nedan, så att "a" blir förvalt och/eller gör så man kan loopa runt alfabetet
-    document.querySelectorAll(".letterCard").forEach((sak) => {
-        if (sak.children[0].textContent === "a") {
-            sak.click()
-        }
-    })
+
+    addSuggestions()
+    chooseFirst(alphabetMain)
 
     document.querySelector(".reload").addEventListener("click", refresh)
     document.querySelector(".reload").addEventListener("keydown", refresh)
@@ -21,6 +18,13 @@ document.body.onload = () => {
     // TEST
     document.querySelector(".buttons").addEventListener("click", () => {
         console.log("testevent funkar")
-        document.querySelector(".end").style.display = "block"
+        // document.querySelector(".end").style.display = "block"
+
+        // for (let i = 0; i < 300; i++) {
+        //     console.log(String.fromCharCode(i) + ` från i = ${i}`)
+        // }
+
     })
+
+    document.querySelector(".langSelector").addEventListener("change", refresh)
 }

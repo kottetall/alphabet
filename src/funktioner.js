@@ -6,6 +6,7 @@ function randomBetween(min, max) {
 
 function createAlphabet(lang = "en") {
     const alphabet = []
+    let specialCharCodes = []
     switch (lang) {
         case "en":
             for (let i = 0; i < 26; i++) {
@@ -13,6 +14,35 @@ function createAlphabet(lang = "en") {
                 alphabet.push(currentLetter)
             }
             break
+        case "sv":
+            for (let i = 0; i < 26; i++) {
+                const currentLetter = String.fromCharCode(i + 97)
+                alphabet.push(currentLetter)
+            }
+            specialCharCodes = [229, 228, 246]
+            for (const char of specialCharCodes) {
+                alphabet.push(String.fromCharCode(char))
+            }
+            break
+        case "nkDk":
+            for (let i = 0; i < 26; i++) {
+                const currentLetter = String.fromCharCode(i + 97)
+                alphabet.push(currentLetter)
+            }
+            specialCharCodes = [230, 248, 229]
+            for (const char of specialCharCodes) {
+                alphabet.push(String.fromCharCode(char))
+            }
+            break
+        case "num":
+            for (let i = 0; i < 26; i++) {
+                alphabet.push(i.toString())
+            }
+            break
+    }
+
+    if (document.querySelector(".case").checked) {
+        return alphabet.map(elt => elt.toUpperCase())
     }
     return alphabet
 }
@@ -37,7 +67,15 @@ function mainLoop(e) {
         const pool = document.querySelector(".pool")
 
         if (checkLetters(this.textContent)) {
-            document.querySelector(".winning").append(this)
+            const winningDiv = document.querySelector(".winning")
+            const children = winningDiv.children
+            const maxAnswerShowing = 5
+            if (children.length > maxAnswerShowing) {
+                for (let i = 0; i < children.length - maxAnswerShowing; i++) {
+                    children[i].style.display = "none"
+                }
+            }
+            winningDiv.append(this)
             this.removeEventListener("click", mainLoop)
             this.setAttribute("tabindex", "-1")
             addSuggestions()
@@ -58,13 +96,9 @@ function mainLoop(e) {
 }
 
 function keyCheck(e) {
-    return e.key === "Enter" || e.type === "click" ? true : false
+    return e.key === "Enter" || e.type === "click" ||
+        e.type === "change" && e.target.tagName === "SELECT" ? true : false
 }
-
-// *** TESTSAK ***
-// document.querySelector(".test").addEventListener("click", addSuggestions)
-// document.querySelector(".testTva").addEventListener("click", clearElementContent)
-// *** TESTSAK ***
 
 function helperMode() {
     const choices = document.querySelectorAll(".pool .letterCard")
@@ -147,9 +181,9 @@ function getLastWinningLetter() {
 }
 
 function checkLetters(letterToCheck) {
-    const previousLetter = getLastWinningLetter().toLowerCase()
+    const previousLetter = getLastWinningLetter()
     if (previousLetter) {
-        letterToCheck = letterToCheck.toLowerCase()
+        letterToCheck = letterToCheck
 
         //Kontrollerar mot huvud-arrayen med bokstäver då det gör att man kan använda sig av olika alfabet utan att ändra kontrollen
         return alphabetMain.indexOf(previousLetter) === alphabetMain.indexOf(letterToCheck) - 1
@@ -160,6 +194,24 @@ function checkLetters(letterToCheck) {
 
 function refresh(e) {
     if (keyCheck(e)) {
-        location.reload()
+        // location.reload()
+        clearElementContent(".winning")
+        updateAlphabets()
+        addSuggestions()
+        chooseFirst(alphabetMain)
     }
+}
+
+function updateAlphabets() {
+    const lang = document.querySelector(".langSelector").value
+    alphabetMain = createAlphabet(lang)
+    possibleAnswers = createAlphabet(lang)
+}
+
+function chooseFirst(alphabetMain) {
+    document.querySelectorAll(".letterCard").forEach((sak) => {
+        if (sak.children[0].textContent === alphabetMain[0]) {
+            sak.click()
+        }
+    })
 }

@@ -15,10 +15,21 @@
         <div class="end"><span class="endtext">Congratulations you've won!</span></div>
         <div class="winning"></div>
         <div class="pool" data-tries=0></div>
-        <footer class="buttons"><button class="reload">Reload</button></footer>
+        <footer class="buttons">
+            <label for="lang">Choose you alphabet
+                <select id="lang" class="langSelector">
+                    <option value="en">en</option>
+                    <option value="sv">sv</option>
+                    <option value="nkDk">nk / dk</option>
+                    <option value="num">123</option>
+                </select>
+            </label>
+            <label for="case">Uppercase letters
+                <input type="checkbox" id="case" class="case" checked>
+            </label>
+            <button class="reload">Reload</button>
+        </footer>
     </div>
-    <!-- <button class="test">Test</button> -->
-    <!-- <button class="testTva">TestTva</button> -->
 
     <script src="src/funktioner.js"></script>
     <script src="src/app.js"></script>
