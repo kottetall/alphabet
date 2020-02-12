@@ -5,7 +5,7 @@ function randomBetween(min, max) {
 }
 
 function createAlphabet(lang = "en") {
-    const alphabet = []
+    let alphabet = []
     let specialCharCodes = []
     switch (lang) {
         case "en":
@@ -35,15 +35,44 @@ function createAlphabet(lang = "en") {
             }
             break
         case "num":
-            for (let i = 0; i < 26; i++) {
+            const maxNum = Math.round(document.querySelector(".maxNum").value)
+            for (let i = 0; i < maxNum; i++) {
                 alphabet.push(i.toString())
             }
             break
     }
 
-    if (document.querySelector(".case").checked) {
-        return alphabet.map(elt => elt.toUpperCase())
+    //FIXME: snygga till nedan!
+    if (lang === "num") {
+        document.querySelectorAll(".buttons label").forEach((element) => {
+            if (element.getAttribute("for") !== "lang") {
+                if (element.getAttribute("for") === "maxNum") {
+                    element.classList.remove("hidden")
+                } else {
+                    element.classList.add("hidden")
+                }
+            }
+        })
+    } else {
+        document.querySelectorAll(".buttons label").forEach((element) => {
+            if (element.getAttribute("for") !== "lang") {
+                if (element.getAttribute("for") !== "maxNum") {
+                    element.classList.remove("hidden")
+                } else {
+                    element.classList.add("hidden")
+                }
+            }
+        })
     }
+    //FIXME: snygga till ovan!
+
+    if (document.querySelector(".case").checked) {
+        alphabet = alphabet.map(elt => elt.toUpperCase())
+    }
+    if (document.querySelector(".reversed").checked) {
+        alphabet = alphabet.reverse()
+    }
+
     return alphabet
 }
 
@@ -194,7 +223,6 @@ function checkLetters(letterToCheck) {
 
 function refresh(e) {
     if (keyCheck(e)) {
-        // location.reload()
         clearElementContent(".winning")
         updateAlphabets()
         addSuggestions()
@@ -214,4 +242,17 @@ function chooseFirst(alphabetMain) {
             sak.click()
         }
     })
+}
+
+function toBoolean(string) {
+    return string === "true" ? true : false
+}
+
+function hideElement(event) {
+    if (keyCheck(event)) {
+        const elementToChange = event.target.parentElement
+        const stateSettingAttribute = "aria-hidden"
+        const newState = !toBoolean(elementToChange.getAttribute(stateSettingAttribute))
+        elementToChange.setAttribute(stateSettingAttribute, newState)
+    }
 }

@@ -15,19 +15,28 @@
         <div class="end"><span class="endtext">Congratulations you've won!</span></div>
         <div class="winning"></div>
         <div class="pool" data-tries=0></div>
-        <footer class="buttons">
-            <label for="lang">Choose you alphabet
-                <select id="lang" class="langSelector">
-                    <option value="en">en</option>
-                    <option value="sv">sv</option>
-                    <option value="nkDk">nk / dk</option>
-                    <option value="num">123</option>
-                </select>
-            </label>
-            <label for="case">Uppercase letters
-                <input type="checkbox" id="case" class="case" checked>
-            </label>
-            <button class="reload">Reload</button>
+        <footer class="menu" aria-hidden=true>
+            <div class="menuCaret" tabindex="0"></div>
+            <div class="buttons">
+                <label for="lang" aria-hidden=false>Choose you alphabet
+                    <select id="lang" class="langSelector">
+                        <option value="en">en</option>
+                        <option value="sv">sv</option>
+                        <option value="nkDk">nk / dk</option>
+                        <option value="num">123</option>
+                    </select>
+                </label>
+                <label for="case" aria-hidden=false>Uppercase letters
+                    <input type="checkbox" id="case" class="case" checked>
+                </label>
+                <label for="reversed" aria-hidden=false>Reversed order
+                    <input type="checkbox" id="reversed" class="reversed">
+                </label>
+                <label for="maxNum" aria-hidden=false>Maximum number
+                    <input type="number" id="maxNum" class="maxNum" min=2 value="26">
+                </label>
+                <button class="reload">Reload</button>
+            </div>
         </footer>
     </div>
 
