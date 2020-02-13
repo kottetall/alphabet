@@ -7,7 +7,7 @@
 
 *:focus {
     outline: none;
-    /* Outline har ersatts med andra visuella ques */
+    /* Outline has been replaced with other visual ques and/or outline on specific items*/
 }
 
 :root {
@@ -32,15 +32,23 @@ footer {
 }
 
 .menuCaret {
-    content: url(/src/resources/caret.png);
-    display: block;
+    --caret-bg: #b1b1e7;
+    --caret-btn-size: 80px;
+
+    display: flex;
     position: absolute;
     border-radius: 100%;
-    background: #b1b1e7;
-    bottom: 100%;
+    background: var(--caret-bg);
+    bottom: 110%;
     padding: 10px;
+    height: var(--caret-btn-size);
+    width: var(--caret-btn-size);
     justify-content: center;
-    border: 4px solid #b1b1e7;
+    border: 4px solid var(--caret-bg);
+}
+
+.fa-angle-double-up {
+    pointer-events: none;
 }
 
 .menuCaret:hover,
@@ -70,7 +78,6 @@ label {
 label[aria-hidden=false]:focus-within,
 button:focus,
 button:hover {
-    /* border-bottom: 1px solid #000; */
     outline: 2px solid #000;
     outline-offset: 2px;
 }
@@ -92,8 +99,12 @@ label[aria-hidden=true] {
 .end {
     display: none;
     position: absolute;
-    width: 100%;
-    height: 70%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background: plum;
     padding: 30px 0;
     text-align: center;
@@ -102,14 +113,26 @@ label[aria-hidden=true] {
 }
 
 .endtext {
-    position: relative;
     display: block;
-    top: 50%;
-    transform: translateY(-50%);
     text-transform: uppercase;
     font-weight: bolder;
     font-size: 16pt;
     letter-spacing: 5px;
+}
+
+.rulesHolder {
+    /* TEMP */
+    display: none !important;
+    /* TEMP */
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.rules {
+    /* transform: scale(0); */
+    padding: 20px;
 }
 
 .winning {
@@ -138,7 +161,7 @@ label[aria-hidden=true] {
     transition: opacity 300ms ease-in-out, font-size 300ms ease-in-out;
 }
 
-.wrong {
+.pool .letterCard.wrong {
     position: relative;
     animation: shake 100ms ease;
 }
@@ -153,7 +176,8 @@ label[aria-hidden=true] {
 
 .pool {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-around;
     min-height: 25vh;
     padding: 0 20px;
     margin-bottom: var(--footer-height);
@@ -162,6 +186,10 @@ label[aria-hidden=true] {
 .pool .letterCard {
     box-shadow: 2px 2px rgba(0, 0, 0, 0.2);
     background: #fff4f4f5;
+    /* animation: fadeIn 1000ms ease; */
+}
+
+.pool .letterCard.firstShowing {
     animation: fadeIn 1000ms ease;
 }
 
@@ -203,8 +231,10 @@ footer[aria-hidden=true] .buttons {
     display: none;
 }
 
-.maxNum {
-    width: 100px;
+.maxNum,
+.numberOfSuggestions {
+    width: 50px;
+    padding-left: 5px;
 }
 
 .reload {
@@ -223,7 +253,7 @@ footer[aria-hidden=true] .buttons {
 }
 
 
-/* ANIMERINGAR */
+/* ANIMATIONS */
 
 @keyframes winner {
     0% {

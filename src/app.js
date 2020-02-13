@@ -11,8 +11,10 @@ document.body.onload = () => {
     addSuggestions()
     chooseFirst(alphabetMain)
 
-    document.querySelector(".reload").addEventListener("click", refresh)
-    document.querySelector(".reload").addEventListener("keydown", refresh)
+    document.querySelectorAll(".reload").forEach((element) => {
+        element.addEventListener("click", refresh)
+        element.addEventListener("keydown", refresh)
+    })
 
     document.querySelector(".langSelector").addEventListener("change", refresh)
     document.querySelectorAll("input[type=checkbox]").forEach(element => {

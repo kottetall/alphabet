@@ -6,17 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/style.css">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://kit.fontawesome.com/f8762344d3.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
     <title>Alphabet</title>
 </head>
 
 <body>
     <div class="main">
-        <div class="end"><span class="endtext">Congratulations you've won!</span></div>
+        <div class="end"><span class="endtext"><i class="fas fa-2x fa-glass-cheers"></i>Congratulations you've won!<i
+                    class="fas fa-2x fa-glass-cheers"></i></span>
+            <button class="reload">Replay</button>
+        </div>
+        <div class="rulesHolder"><i class="fas fa-2x fa-question"></i>
+            <p class="rules">
+                The goal of this game is to pick the right letter/number in order.
+                <br>
+                <br>
+                You can change different things about
+                the game by pressing the <i class="fas fa-angle-double-up"></i>-button
+            </p>
+        </div>
         <div class="winning"></div>
         <div class="pool" data-tries=0></div>
         <footer class="menu" aria-hidden=true>
-            <div class="menuCaret" tabindex="0"></div>
+            <div class="menuCaret" tabindex="0"><i class="fas fa-3x fa-angle-double-up"></i></div>
             <div class="buttons">
                 <label for="lang" aria-hidden=false>Choose you alphabet
                     <select id="lang" class="langSelector">
@@ -34,6 +47,9 @@
                 </label>
                 <label for="maxNum" aria-hidden=false>Maximum number
                     <input type="number" id="maxNum" class="maxNum" min=2 value="26">
+                </label>
+                <label for="numberOfSuggestions" aria-hidden=false>Number of suggestions
+                    <input type="number" id="numberOfSuggestions" class="numberOfSuggestions" min=2 value="4">
                 </label>
                 <button class="reload">Reload</button>
             </div>

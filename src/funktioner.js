@@ -45,7 +45,7 @@ function createAlphabet(lang = "en") {
     //FIXME: snygga till nedan!
     if (lang === "num") {
         document.querySelectorAll(".buttons label").forEach((element) => {
-            if (element.getAttribute("for") !== "lang") {
+            if (element.getAttribute("for") !== "lang" && element.getAttribute("for") !== "numberOfSuggestions") {
                 if (element.getAttribute("for") === "maxNum") {
                     element.classList.remove("hidden")
                 } else {
@@ -55,7 +55,7 @@ function createAlphabet(lang = "en") {
         })
     } else {
         document.querySelectorAll(".buttons label").forEach((element) => {
-            if (element.getAttribute("for") !== "lang") {
+            if (element.getAttribute("for") !== "lang" && element.getAttribute("for") !== "numberOfSuggestions") {
                 if (element.getAttribute("for") !== "maxNum") {
                     element.classList.remove("hidden")
                 } else {
@@ -82,13 +82,15 @@ function createLetterCard(letter = "a") {
     span.textContent = letter
     span.className = "letter"
 
-    div.className = "letterCard"
+    div.className = "letterCard firstShowing"
+    div.addEventListener("animationend", (e) => e.target.classList.remove("firstShowing"))
     div.addEventListener("click", mainLoop)
     div.addEventListener("keydown", mainLoop)
     div.setAttribute("tabindex", "0")
 
     div.append(span)
     document.querySelector(".pool").append(div)
+
 }
 
 function mainLoop(e) {
@@ -113,11 +115,12 @@ function mainLoop(e) {
             this.classList.add("wrong")
             this.addEventListener("animationend", () => {
                 this.classList.remove("wrong")
+                this.blur()
             })
-            this.blur()
+
 
             pool.dataset.tries = +pool.dataset.tries + 1
-            if (+pool.dataset.tries === 3) {
+            if (+pool.dataset.tries === pool.children.length - 1) {
                 helperMode()
             }
         }
@@ -153,8 +156,9 @@ function addSuggestions() {
     clearElementContent(".pool")
 
     if (document.querySelectorAll(".winning .letterCard").length !== alphabetMain.length) {
-        let numberOfAlternatives = 3 // not counting the right answer
+        let numberOfAlternatives = document.querySelector(".numberOfSuggestions").value - 1 // - 1 because the user chooses the total amount of suggestions while we need the number of false suggestions
         const rightAnswer = alphabetMain[alphabetMain.indexOf(getLastWinningLetter()) + 1]
+
 
         const suggestions = [rightAnswer]
         possibleAnswers.splice(possibleAnswers.indexOf(rightAnswer), 1)
@@ -177,11 +181,12 @@ function addSuggestions() {
         }
 
         const suggestionsRandomized = shuffleArray(suggestions)
+
         for (const suggestion of suggestionsRandomized) {
             createLetterCard(suggestion)
         }
     } else {
-        document.querySelector(".end").style.display = "block"
+        document.querySelector(".end").style.display = "flex"
     }
 }
 
@@ -197,6 +202,16 @@ function shuffleArray(startingArray) {
         }
         counter++
     }
+
+    if (startingArray.length !== shuffledArray.length) {
+        //FIXME: Nödlösning på loop-problem nedan, skriv om shufflefunktionen
+        for (const part of startingArray) {
+            if (!shuffledArray.includes(part)) {
+                shuffledArray.push(part)
+            }
+        }
+    }
+
     return shuffledArray
 }
 
@@ -223,6 +238,7 @@ function checkLetters(letterToCheck) {
 
 function refresh(e) {
     if (keyCheck(e)) {
+        document.querySelector(".end").style.display = "none"
         clearElementContent(".winning")
         updateAlphabets()
         addSuggestions()
@@ -256,3 +272,32 @@ function hideElement(event) {
         elementToChange.setAttribute(stateSettingAttribute, newState)
     }
 }
+
+// FIXME: TESTFUNKTION SHUFFLE GENOM RECURSION NEDAN
+
+function popRandomArrayItem(startingArray, returningArray = []) {
+    console.log("test funkar")
+    console.log(startingArray)
+    console.log(returningArray)
+
+    if (startingArray.length > 0) {
+        console.log("if sant")
+        const postToBeMoved = startingArray[randomBetween(0, startingArray.length - 1)]
+        startingArray.splice(startingArray.indexOf(postToBeMoved), 1)
+
+        returningArray.push(postToBeMoved)
+        popRandomArrayItem(startingArray, returningArray)
+    } else {
+        console.log(returningArray)
+        console.log("if falsk")
+        return [...returningArray]
+    }
+}
+
+// const testArray = ["A", "B", "C", "D"]
+
+// const newTestArray = popRandomArrayItem(testArray)
+// console.log(testArray)
+// console.log(newTestArray)
+
+// FIXME: TESTFUNKTION SHUFFLE GENOM RECURSION OVAN
