@@ -118,7 +118,6 @@ function mainLoop(e) {
                 this.blur()
             })
 
-
             pool.dataset.tries = +pool.dataset.tries + 1
             if (+pool.dataset.tries === pool.children.length - 1) {
                 helperMode()
@@ -181,7 +180,6 @@ function addSuggestions() {
         }
 
         const suggestionsRandomized = shuffleArray(suggestions)
-
         for (const suggestion of suggestionsRandomized) {
             createLetterCard(suggestion)
         }
@@ -190,29 +188,15 @@ function addSuggestions() {
     }
 }
 
-function shuffleArray(startingArray) {
-
-    const shuffledArray = []
-    let counter = 0
-    while (startingArray.length !== shuffledArray.length && counter !== 50) {
-        const randomIndex = randomBetween(0, startingArray.length - 1)
-
-        if (!shuffledArray.includes(startingArray[randomIndex])) {
-            shuffledArray.push(startingArray[randomIndex])
-        }
-        counter++
+function shuffleArray(startingArray, returningArray = []) {
+    if (startingArray.length > 0) {
+        const postToBeMoved = startingArray[randomBetween(0, startingArray.length - 1)]
+        startingArray.splice(startingArray.indexOf(postToBeMoved), 1)
+        returningArray.push(postToBeMoved)
+        return shuffleArray(startingArray, returningArray)
+    } else {
+        return returningArray
     }
-
-    if (startingArray.length !== shuffledArray.length) {
-        //FIXME: Nödlösning på loop-problem nedan, skriv om shufflefunktionen
-        for (const part of startingArray) {
-            if (!shuffledArray.includes(part)) {
-                shuffledArray.push(part)
-            }
-        }
-    }
-
-    return shuffledArray
 }
 
 function getLastWinningLetter() {
@@ -270,34 +254,14 @@ function hideElement(event) {
         const stateSettingAttribute = "aria-hidden"
         const newState = !toBoolean(elementToChange.getAttribute(stateSettingAttribute))
         elementToChange.setAttribute(stateSettingAttribute, newState)
+
+        if (elementToChange.classList.contains("menu")) {
+            const caret = document.querySelector(".menuCaret")
+            const toAnimationClass = newState ? "hideCaret" : "showCaret"
+            const fromAnimationClass = !newState ? "hideCaret" : "showCaret"
+            caret.classList.add(toAnimationClass)
+            caret.classList.remove(fromAnimationClass)
+        }
+
     }
 }
-
-// FIXME: TESTFUNKTION SHUFFLE GENOM RECURSION NEDAN
-
-function popRandomArrayItem(startingArray, returningArray = []) {
-    console.log("test funkar")
-    console.log(startingArray)
-    console.log(returningArray)
-
-    if (startingArray.length > 0) {
-        console.log("if sant")
-        const postToBeMoved = startingArray[randomBetween(0, startingArray.length - 1)]
-        startingArray.splice(startingArray.indexOf(postToBeMoved), 1)
-
-        returningArray.push(postToBeMoved)
-        popRandomArrayItem(startingArray, returningArray)
-    } else {
-        console.log(returningArray)
-        console.log("if falsk")
-        return [...returningArray]
-    }
-}
-
-// const testArray = ["A", "B", "C", "D"]
-
-// const newTestArray = popRandomArrayItem(testArray)
-// console.log(testArray)
-// console.log(newTestArray)
-
-// FIXME: TESTFUNKTION SHUFFLE GENOM RECURSION OVAN

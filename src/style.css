@@ -39,7 +39,8 @@ footer {
     position: absolute;
     border-radius: 100%;
     background: var(--caret-bg);
-    bottom: 110%;
+    bottom: 120%;
+    transform: translateY(70%);
     padding: 10px;
     height: var(--caret-btn-size);
     width: var(--caret-btn-size);
@@ -54,17 +55,17 @@ footer {
 .menuCaret:hover,
 .menuCaret:focus {
     cursor: pointer;
-    border: 4px solid #000;
+    border: 4px solid #0000007a;
 
 }
 
-footer[aria-hidden=true] .menuCaret {
-    transform: rotateX(0deg);
-
+.hideCaret {
+    animation: turnAndMoveReversed 500ms ease-in-out forwards;
 }
 
-footer[aria-hidden=false] .menuCaret {
-    transform: rotateX(180deg);
+.showCaret {
+    animation: turnAndMove 500ms ease-in-out forwards;
+
 }
 
 footer[aria-hidden=true] {
@@ -75,15 +76,21 @@ label {
     margin: 5px 0;
 }
 
-label[aria-hidden=false]:focus-within,
-button:focus,
-button:hover {
-    outline: 2px solid #000;
+label[aria-hidden=false]:hover,
+label[aria-hidden=false]:focus,
+label[aria-hidden=false]:focus-within {
+    outline: 1px solid #0000007a;
     outline-offset: 2px;
 }
 
 label[aria-hidden=true] {
     display: none;
+}
+
+label[aria-hidden=false]:hover,
+input:hover,
+select:hover {
+    cursor: pointer;
 }
 
 .main {
@@ -131,7 +138,6 @@ label[aria-hidden=true] {
 }
 
 .rules {
-    /* transform: scale(0); */
     padding: 20px;
 }
 
@@ -145,6 +151,10 @@ label[aria-hidden=true] {
     background: var(--top-bg);
     background: linear-gradient(0, var(--main-bg) 4%, var(--top-bg));
 }
+
+/* .winning .letterCard {
+    background: radial-gradient(#ffffffaa, #ffffff00 80%)
+} */
 
 .winning .letterCard .letter {
     font-size: 20pt;
@@ -186,7 +196,6 @@ label[aria-hidden=true] {
 .pool .letterCard {
     box-shadow: 2px 2px rgba(0, 0, 0, 0.2);
     background: #fff4f4f5;
-    /* animation: fadeIn 1000ms ease; */
 }
 
 .pool .letterCard.firstShowing {
@@ -238,20 +247,32 @@ footer[aria-hidden=true] .buttons {
 }
 
 .reload {
-    margin-top: 20px;
-    height: 50px;
-    width: 100px;
+    --reload-btn-size: 50px;
+    --reload-bg: #6565ea;
+
+    height: var(--reload-btn-size);
+    width: var(--reload-btn-size);
+    padding: 10px;
     border: none;
-    border-radius: 20px;
-    background: #6565ea;
+    border-radius: 100%;
+    background: var(--reload-bg);
     color: #fff;
     text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid var(--reload-bg);
 }
 
-.reload:hover {
+.reload:active {
+    animation: reloading 200ms ease-in-out forwards;
+}
+
+.reload:hover,
+.reload:focus {
     cursor: pointer;
+    border-color: #0000007a;
 }
-
 
 /* ANIMATIONS */
 
@@ -299,5 +320,31 @@ footer[aria-hidden=true] .buttons {
 
     to {
         opacity: 1;
+    }
+}
+
+@keyframes turnAndMove {
+    from {
+        transform: rotateZ(0deg) translateY(70%);
+    }
+
+    to {
+        transform: rotateZ(180deg) translateY(0%);
+    }
+}
+
+@keyframes turnAndMoveReversed {
+    from {
+        transform: rotateZ(180deg) translateY(0%);
+    }
+
+    to {
+        transform: rotateZ(0deg) translateY(70%);
+    }
+}
+
+@keyframes reloading {
+    to {
+        transform: rotateZ(360deg);
     }
 }

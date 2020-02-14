@@ -22,6 +22,7 @@ document.body.onload = () => {
         element.addEventListener("keydown", refresh)
     })
     document.querySelector(".maxNum").addEventListener("keydown", refresh)
+    document.querySelector(".numberOfSuggestions").addEventListener("keydown", refresh)
 
     document.querySelector(".menuCaret").addEventListener("click", hideElement)
     document.querySelector(".menuCaret").addEventListener("keydown", hideElement)
