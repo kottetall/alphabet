@@ -93,11 +93,18 @@ function createLetterCard(letter = "a") {
 
 }
 
+function sayLetter(letter) {
+    let msg = new SpeechSynthesisUtterance(letter)
+    msg.lang = "sv-SE" //FIXME: Funkar inte
+    window.speechSynthesis.speak(msg)
+}
+
 function mainLoop(e) {
     if (keyCheck(e)) {
+        let chosenLetter = this.textContent
         const pool = document.querySelector(".pool")
-
-        if (checkLetters(this.textContent)) {
+        sayLetter(chosenLetter)
+        if (checkLetters(chosenLetter)) {
             const winningDiv = document.querySelector(".winning")
             const children = winningDiv.children
             const maxAnswerShowing = 5
