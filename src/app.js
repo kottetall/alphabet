@@ -3,6 +3,7 @@
 console.log("app.js funkar")
 
 let msg = new SpeechSynthesisUtterance()
+msg.lang = "sv-SE"
 
 let alphabetMain = createAlphabet()
 let possibleAnswers = createAlphabet()

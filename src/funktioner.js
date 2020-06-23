@@ -13,8 +13,6 @@ function createAlphabet(lang = "en") {
                 const currentLetter = String.fromCharCode(i + 97)
                 alphabet.push(currentLetter)
             }
-
-            msg.lang = "en-US" // Language selector for speech
             break
         case "sv":
             for (let i = 0; i < 26; i++) {
@@ -25,8 +23,6 @@ function createAlphabet(lang = "en") {
             for (const char of specialCharCodes) {
                 alphabet.push(String.fromCharCode(char))
             }
-
-            msg.lang = "sv-SE" // Language selector for speech
             break
         case "nkDk":
             for (let i = 0; i < 26; i++) {
@@ -37,8 +33,6 @@ function createAlphabet(lang = "en") {
             for (const char of specialCharCodes) {
                 alphabet.push(String.fromCharCode(char))
             }
-
-            msg.lang = "da-DK" // Language selector for speech
             break
         case "num":
             const maxNum = Math.round(document.querySelector(".maxNum").value)
