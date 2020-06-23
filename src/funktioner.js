@@ -13,6 +13,8 @@ function createAlphabet(lang = "en") {
                 const currentLetter = String.fromCharCode(i + 97)
                 alphabet.push(currentLetter)
             }
+
+            msg.lang = "en-US" // Language selector for speech
             break
         case "sv":
             for (let i = 0; i < 26; i++) {
@@ -23,6 +25,8 @@ function createAlphabet(lang = "en") {
             for (const char of specialCharCodes) {
                 alphabet.push(String.fromCharCode(char))
             }
+
+            msg.lang = "sv-SE" // Language selector for speech
             break
         case "nkDk":
             for (let i = 0; i < 26; i++) {
@@ -33,6 +37,8 @@ function createAlphabet(lang = "en") {
             for (const char of specialCharCodes) {
                 alphabet.push(String.fromCharCode(char))
             }
+
+            msg.lang = "da-DK" // Language selector for speech
             break
         case "num":
             const maxNum = Math.round(document.querySelector(".maxNum").value)
@@ -94,8 +100,7 @@ function createLetterCard(letter = "a") {
 }
 
 function sayLetter(letter) {
-    let msg = new SpeechSynthesisUtterance(letter)
-    msg.lang = "sv-SE" //FIXME: Funkar inte
+    msg.text = letter
     window.speechSynthesis.speak(msg)
 }
 
@@ -143,6 +148,7 @@ function helperMode() {
     for (const choice of choices) {
         if (checkLetters(choice.children[0].textContent)) {
             choice.classList.add("highlight")
+            msg.text = `Kan du hitta ${choice.children[0].textContent}` // spelar hjälpmeddelande
         } else {
             choice.classList.add("obscure")
         }

@@ -2,6 +2,7 @@
 
 console.log("app.js funkar")
 
+let msg = new SpeechSynthesisUtterance()
 
 let alphabetMain = createAlphabet()
 let possibleAnswers = createAlphabet()
